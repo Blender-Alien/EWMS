@@ -49,7 +49,7 @@ def StartMenu():  # Erste Funktion des Programms
     PrefixFest = "Standard Eingabeprefix: " + Prefix
     GeneralOutput(PrefixFest)
     # Abfrage nach Navigation
-    FirstNavigation()
+    Navigation()
 
 
 StartMenu()
