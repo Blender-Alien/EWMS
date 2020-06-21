@@ -2,17 +2,35 @@
 
 Prefix = "/"
 
+
+# InBetweenOperator --------------------------
+
+def NavigateToProceed(): # Zwischenschritt zum Kryptografischem Abteil
+    print("Ende")
+
+
 # MainFrameWork ------------------------------
 
 def Navigation():  # Konsolenfunktion
     #Variablen
     userinput = "Error"
-    # Hilfestellung
-    hilfe = "Um eine Liste an Befehlen zu erhalten, nutzen Sie: [" + Prefix + "help] ."
-    GeneralOutput(hilfe)
+    recognized = "Error"
     # Eingabeschleife
-    while userinput == "Error":
+    while userinput and recognized == "Error":
+        userinput = "Error"
         userinput = CommandInput()
+        #Kommandos
+        if userinput == "/help": #Help - Kommando
+            GeneralOutput("Mögliche Befehle:\n(/help)\n(/setproceed)")
+            recognized = "Erfolg"
+        elif userinput == "/setproceed": #Proceed - Kommando
+            NavigateToProceed()
+            recognized = "Erfolg"
+        else: # Befehl nicht erkannt
+            if userinput != "Error": # Check auf Prefix-Error
+                GeneralOutput("[" + userinput + "] ist kein gültiger Befehl!")
+            recognized = "Error"
+    Navigation() # Wiederhohlung der Eingabe bei Print-Befehlen
 
 
 def CommandInput():  # Multipler Aufruf des User Inputs
@@ -32,10 +50,6 @@ def CommandInput():  # Multipler Aufruf des User Inputs
     return returnvalue
 
 
-def GeneralNavigation():  # Multipler Aufruf der Interpretation des User Inputs
-    pass
-
-
 def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
     # Ausgabe an Nutzer
     print("[System.Output] " + args)
@@ -43,11 +57,13 @@ def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
 
 # StartMenu ----------------------------------
 
-
 def StartMenu():  # Erste Funktion des Programms
     # Erstausgabe an Nutzer
     PrefixFest = "Standard Eingabeprefix: " + Prefix
     GeneralOutput(PrefixFest)
+    # Hilfestellung
+    hilfe = "Um eine Liste an Befehlen zu erhalten, nutzen Sie: [" + Prefix + "help] ."
+    GeneralOutput(hilfe)
     # Abfrage nach Navigation
     Navigation()
 
