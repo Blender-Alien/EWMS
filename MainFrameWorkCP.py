@@ -19,7 +19,7 @@ def InBetweenNavigation():  # Konsolenfunktion
             recognized = "Erfolg"
         elif userinput == "/back":
             StartMenu()
-            recognized = "Erfolg
+            recognized = "Erfolg"
         elif userinput == "/exit":
             exit()
         else: # Befehl nicht erkannt
@@ -50,10 +50,10 @@ def MainNavigation():  # Konsolenfunktion
             GeneralOutput("Mögliche Befehle:\n(/help)\n(/setproceed)\n(/exit)")
             recognized = "Erfolg"
         elif userinput == "/setproceed": #Proceed - Kommando
-        elif userinput == "/exit":
-            exit()
             NavigateToProceed()
             recognized = "Erfolg"
+        elif userinput == "/exit":
+            exit()
         else: # Befehl nicht erkannt
             if userinput != "Error": # Check auf Prefix-Error
                 GeneralOutput("[" + userinput + "] ist kein gültiger Befehl! Nutze [/help].")
