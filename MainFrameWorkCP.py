@@ -5,20 +5,44 @@ Prefix = "/"
 
 # InBetweenOperator --------------------------
 
-def NavigateToProceed(): # Zwischenschritt zum Kryptografischem Abteil
-    print("Ende")
-
-
-# MainFrameWork ------------------------------
-
-def Navigation():  # Konsolenfunktion
+def InBetweenNavigation():  # Konsolenfunktion
     #Variablen
     userinput = "Error"
     recognized = "Error"
     # Eingabeschleife
     while userinput and recognized == "Error":
         userinput = "Error"
-        userinput = CommandInput()
+        userinput = CommandInput("Main/InBetween ")
+        #Kommandos
+        if userinput == "/help": #Help - Kommando
+            GeneralOutput("Mögliche Befehle:\n(/back)")
+            recognized = "Erfolg"
+        elif userinput == "/back":
+            StartMenu()
+            recognized = "Erfolg"
+        else: # Befehl nicht erkannt
+            if userinput != "Error": # Check auf Prefix-Error
+                GeneralOutput("[" + userinput + "] ist kein gültiger Befehl! Nutze [/help].")
+            recognized = "Error"
+    InBetweenNavigation() # Wiederhohlung der Eingabe bei Print-Befehlen
+
+def NavigateToProceed(): # Zwischenschritt zum Kryptografischem Abteil
+    #Variablen
+    #Vorschläge
+    GeneralOutput("Switched to Stage [InBetween]")
+    InBetweenNavigation()
+
+
+# MainFrameWork ------------------------------
+
+def MainNavigation():  # Konsolenfunktion
+    #Variablen
+    userinput = "Error"
+    recognized = "Error"
+    # Eingabeschleife
+    while userinput and recognized == "Error":
+        userinput = "Error"
+        userinput = CommandInput("Main ")
         #Kommandos
         if userinput == "/help": #Help - Kommando
             GeneralOutput("Mögliche Befehle:\n(/help)\n(/setproceed)")
@@ -28,16 +52,16 @@ def Navigation():  # Konsolenfunktion
             recognized = "Erfolg"
         else: # Befehl nicht erkannt
             if userinput != "Error": # Check auf Prefix-Error
-                GeneralOutput("[" + userinput + "] ist kein gültiger Befehl!")
+                GeneralOutput("[" + userinput + "] ist kein gültiger Befehl! Nutze [/help].")
             recognized = "Error"
-    Navigation() # Wiederhohlung der Eingabe bei Print-Befehlen
+    MainNavigation() # Wiederhohlung der Eingabe bei Print-Befehlen
 
 
-def CommandInput():  # Multipler Aufruf des User Inputs
+def CommandInput(stage):  # Multipler Aufruf des User Inputs
     #Variablen
     returnvalue = None
     #Benutzereingabe
-    userinput = str(input("> "))
+    userinput = str(input(stage + ">> "))
     #Checkauf richtiges Prefix
     if userinput.startswith(Prefix):
       pass
@@ -58,14 +82,17 @@ def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
 # StartMenu ----------------------------------
 
 def StartMenu():  # Erste Funktion des Programms
-    # Erstausgabe an Nutzer
-    PrefixFest = "Standard Eingabeprefix: " + Prefix
-    GeneralOutput(PrefixFest)
-    # Hilfestellung
-    hilfe = "Um eine Liste an Befehlen zu erhalten, nutzen Sie: [" + Prefix + "help] ."
-    GeneralOutput(hilfe)
+    #Anmerkung der Stage
+    GeneralOutput("Switched to Stage [Main]")
     # Abfrage nach Navigation
-    Navigation()
+    MainNavigation()
 
+# MainProgramm -------------------------------
 
+# Erstausgabe an Nutzer
+PrefixFest = "Standard Eingabeprefix: " + Prefix
+GeneralOutput(PrefixFest)
+# Hilfestellung
+hilfe = "Um eine Liste an Befehlen zu erhalten, nutzen Sie: [" + Prefix + "help] ."
+GeneralOutput(hilfe)
 StartMenu()
