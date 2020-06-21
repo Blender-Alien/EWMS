@@ -15,11 +15,13 @@ def InBetweenNavigation():  # Konsolenfunktion
         userinput = CommandInput("Main/InBetween ")
         #Kommandos
         if userinput == "/help": #Help - Kommando
-            GeneralOutput("Mögliche Befehle:\n(/back)")
+            GeneralOutput("Mögliche Befehle:\n(/back)\n(/exit)")
             recognized = "Erfolg"
         elif userinput == "/back":
             StartMenu()
-            recognized = "Erfolg"
+            recognized = "Erfolg
+        elif userinput == "/exit":
+            exit()
         else: # Befehl nicht erkannt
             if userinput != "Error": # Check auf Prefix-Error
                 GeneralOutput("[" + userinput + "] ist kein gültiger Befehl! Nutze [/help].")
@@ -45,9 +47,11 @@ def MainNavigation():  # Konsolenfunktion
         userinput = CommandInput("Main ")
         #Kommandos
         if userinput == "/help": #Help - Kommando
-            GeneralOutput("Mögliche Befehle:\n(/help)\n(/setproceed)")
+            GeneralOutput("Mögliche Befehle:\n(/help)\n(/setproceed)\n(/exit)")
             recognized = "Erfolg"
         elif userinput == "/setproceed": #Proceed - Kommando
+        elif userinput == "/exit":
+            exit()
             NavigateToProceed()
             recognized = "Erfolg"
         else: # Befehl nicht erkannt
