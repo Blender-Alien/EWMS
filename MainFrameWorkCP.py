@@ -16,7 +16,7 @@ def NavigateToProceed(): # Zwischenschritt zum Kryptografischem Abteil
 # MainFrameWork ------------------------------
 
 def MainNavigation(stage):  # Konsolenfunktion
-    #Variablen
+    # Variablen
     userinput = "Error"
     recognized = "Error"
     # Eingabeschleife
@@ -24,48 +24,48 @@ def MainNavigation(stage):  # Konsolenfunktion
         userinput = "Error"
         userinput = CommandInput(stage)
         #Kommandos
-        if stage == "Main ":
-            if userinput == f"{Prefix}help": #Help - Kommando
+        if stage == "Main ":  # Kommandos für Main Stage
+            if userinput == f"{Prefix}help":  # Help - Kommando
                 GeneralOutput(f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}setproceedure)\n({Prefix}exit)")
                 recognized = "Erfolg"
-            elif userinput == f"{Prefix}setproceedure": #Proceed - Kommando
+            elif userinput == f"{Prefix}setproceedure":  # Proceedure - Kommando
                 NavigateToProceed()
                 recognized = "Erfolg"
-            elif userinput == f"{Prefix}exit":
-                exit()
-            else: # Befehl nicht erkannt
-                if userinput != "Error": # Check auf Prefix-Error
-                    GeneralOutput("[" + userinput + f"] ist kein gültiger Befehl! Nutze [{Prefix}help].")
-                recognized = "Error"
-        if stage == "Main/InBetween ":
-            if userinput == f"{Prefix}help":  # Help - Kommando
-                GeneralOutput(f"Mögliche Befehle:\n({Prefix}back)\n({Prefix}exit)")
-                recognized = "Erfolg"
-            elif userinput == f"{Prefix}back":
-                StartMenu()
-                recognized = "Erfolg"
-            elif userinput == f"{Prefix}exit":
+            elif userinput == f"{Prefix}exit":  # Exit - Kommando
                 exit()
             else:  # Befehl nicht erkannt
                 if userinput != "Error":  # Check auf Prefix-Error
                     GeneralOutput("[" + userinput + f"] ist kein gültiger Befehl! Nutze [{Prefix}help].")
                 recognized = "Error"
-    MainNavigation(stage) # Wiederhohlung der Eingabe bei Print-Befehlen
+        if stage == "Main/InBetween ":  # Kommandos für InBetween Stage
+            if userinput == f"{Prefix}help":  # Help - Kommando
+                GeneralOutput(f"Mögliche Befehle:\n({Prefix}back)\n({Prefix}exit)")
+                recognized = "Erfolg"
+            elif userinput == f"{Prefix}back":  # Back - Kommando
+                StartMenu()
+                recognized = "Erfolg"
+            elif userinput == f"{Prefix}exit":  # Exit - Kommando
+                exit()
+            else:  # Befehl nicht erkannt
+                if userinput != "Error":  # Check auf Prefix-Error
+                    GeneralOutput("[" + userinput + f"] ist kein gültiger Befehl! Nutze [{Prefix}help].")
+                recognized = "Error"
+    MainNavigation(stage)  # Wiederhohlung der Eingabe bei Print-Befehlen
 
 
 def CommandInput(stage):  # Multipler Aufruf des User Inputs
-    #Variablen
+    # Variablen
     returnvalue = None
-    #Benutzereingabe
+    # Benutzereingabe
     userinput = str(input(stage + ">> "))
-    #Checkauf richtiges Prefix
+    # Checkauf richtiges Prefix
     if userinput.startswith(Prefix):
       pass
-    else: # Rückgabe mit Error
+    else:  # Rückgabe mit Error
       GeneralOutput("Ungültiges Prefix.")
       returnvalue = "Error"
       return returnvalue
-    #Rückgabe mit Erfolg
+    # Rückgabe mit Erfolg
     returnvalue = userinput
     return returnvalue
 
@@ -86,9 +86,8 @@ def StartMenu():  # Erste Funktion des Programms
 # MainProgramm -------------------------------
 
 # Erstausgabe an Nutzer
-PrefixFest = "Standard Eingabeprefix: " + Prefix
-GeneralOutput(PrefixFest)
+GeneralOutput("Standard Eingabeprefix: " + Prefix)
 # Hilfestellung
-hilfe = "Um eine Liste an Befehlen zu erhalten, nutzen Sie: [" + Prefix + "help] ."
-GeneralOutput(hilfe)
+GeneralOutput("Um eine Liste an Befehlen zu erhalten, nutzen Sie: [" + Prefix + "help] .")
+# Start der Menüschleife
 StartMenu()
