@@ -7,7 +7,7 @@ Prefix = "/"
 
 def NavigateToProceed(): # Zwischenschritt zum Kryptografischem Abteil
     # Variablen
-    orders = [f"{Prefix}goto_main", f"{Prefix}help", f"{Prefix}exit"]
+    orders = [f"{Prefix}goto_main", f"{Prefix}help", f"{Prefix}exit", "None"]
     order = ["StartMenu()", "GeneralOutput(x)", "exit()"]
     x = f"Mögliche Befehle:\n({Prefix}goto_main)\n({Prefix}exit)"
     # Vorschläge
@@ -32,7 +32,7 @@ def MainNavigation(stage, orders, order, x):  # Konsolenfunktion
             exec(order[1])
         elif userinput == orders[2]:
             exec(order[2])
-        elif userinput == order[3]:
+        elif userinput == orders[3]:
             exec(order[3])
         else:  # Check auf Prefix Fehler
             if userinput != "Error":
@@ -66,7 +66,7 @@ def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
 
 def StartMenu():  # Erste Funktion des Programms
     # Befehle
-    orders = [f"{Prefix}help", f"{Prefix}goto_krypto", f"{Prefix}exit"]  # Befehle
+    orders = [f"{Prefix}help", f"{Prefix}goto_krypto", f"{Prefix}exit", "None"]  # Befehle
     order = ["GeneralOutput(x)", "NavigateToProceed()", "exit()"]
     x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_krypto)\n({Prefix}exit)"
     # Anmerkung der Stage
