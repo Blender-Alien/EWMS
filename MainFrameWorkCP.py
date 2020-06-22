@@ -5,17 +5,19 @@ Prefix = "/"
 
 # InBetweenOperator --------------------------
 
-
 def NavigateToProceed(): # Zwischenschritt zum Kryptografischem Abteil
-    #Variablen
-    #Vorschläge
-    GeneralOutput("Switched to Stage [InBetween]")
-    MainNavigation("Main/InBetween ")
+    # Variablen
+    orders = [f"{Prefix}goto_main", f"{Prefix}help", f"{Prefix}exit"]
+    order = ["StartMenu()", "GeneralOutput(x)", "exit()"]
+    x = f"Mögliche Befehle:\n({Prefix}goto_main)\n({Prefix}exit)"
+    # Vorschläge
+    GeneralOutput("Switched to Stage [Krypto]")
+    MainNavigation("Krypto ", orders, order, x)
 
 
 # MainFrameWork ------------------------------
 
-def MainNavigation(stage):  # Konsolenfunktion
+def MainNavigation(stage, orders, order, x):  # Konsolenfunktion
     # Variablen
     userinput = "Error"
     recognized = "Error"
@@ -24,33 +26,18 @@ def MainNavigation(stage):  # Konsolenfunktion
         userinput = "Error"
         userinput = CommandInput(stage)
         #Kommandos
-        if stage == "Main ":  # Kommandos für Main Stage
-            if userinput == f"{Prefix}help":  # Help - Kommando
-                GeneralOutput(f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}setproceedure)\n({Prefix}exit)")
-                recognized = "Erfolg"
-            elif userinput == f"{Prefix}setproceedure":  # Proceedure - Kommando
-                NavigateToProceed()
-                recognized = "Erfolg"
-            elif userinput == f"{Prefix}exit":  # Exit - Kommando
-                exit()
-            else:  # Befehl nicht erkannt
-                if userinput != "Error":  # Check auf Prefix-Error
-                    GeneralOutput("[" + userinput + f"] ist kein gültiger Befehl! Nutze [{Prefix}help].")
-                recognized = "Error"
-        if stage == "Main/InBetween ":  # Kommandos für InBetween Stage
-            if userinput == f"{Prefix}help":  # Help - Kommando
-                GeneralOutput(f"Mögliche Befehle:\n({Prefix}back)\n({Prefix}exit)")
-                recognized = "Erfolg"
-            elif userinput == f"{Prefix}back":  # Back - Kommando
-                StartMenu()
-                recognized = "Erfolg"
-            elif userinput == f"{Prefix}exit":  # Exit - Kommando
-                exit()
-            else:  # Befehl nicht erkannt
-                if userinput != "Error":  # Check auf Prefix-Error
-                    GeneralOutput("[" + userinput + f"] ist kein gültiger Befehl! Nutze [{Prefix}help].")
-                recognized = "Error"
-    MainNavigation(stage)  # Wiederhohlung der Eingabe bei Print-Befehlen
+        if userinput == orders[0]:
+            exec(order[0])
+        elif userinput == orders[1]:
+            exec(order[1])
+        elif userinput == orders[2]:
+            exec(order[2])
+        elif userinput == order[3]:
+            exec(order[3])
+        else:  # Check auf Prefix Fehler
+            if userinput != "Error":
+                GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
+    MainNavigation(stage, orders, order,  x)  # Wiederhohlung der Eingabe bei Print-Befehlen
 
 
 def CommandInput(stage):  # Multipler Aufruf des User Inputs
@@ -78,10 +65,14 @@ def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
 # StartMenu ----------------------------------
 
 def StartMenu():  # Erste Funktion des Programms
-    #Anmerkung der Stage
+    # Befehle
+    orders = [f"{Prefix}help", f"{Prefix}goto_krypto", f"{Prefix}exit"]  # Befehle
+    order = ["GeneralOutput(x)", "NavigateToProceed()", "exit()"]
+    x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_krypto)\n({Prefix}exit)"
+    # Anmerkung der Stage
     GeneralOutput("Switched to Stage [Main]")
     # Abfrage nach Navigation
-    MainNavigation("Main ")
+    MainNavigation("Main ", orders, order, x)
 
 # MainProgramm -------------------------------
 
