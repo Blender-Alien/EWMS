@@ -2,17 +2,30 @@
 
 Prefix = "/"
 
+# Subroutine Template ---------------------
 
-# InBetweenOperator --------------------------
 
-def NavigateToProceed(): # Zwischenschritt zum Kryptografischem Abteil
+def subroutinename(): # Zwischenschritt zum Kryptografischem Abteil
     # Variablen
-    orders = [f"{Prefix}goto_main", f"{Prefix}help", f"{Prefix}exit", "None"]
-    order = ["StartMenu()", "GeneralOutput(x)", "exit()"]
-    x = f"Mögliche Befehle:\n({Prefix}goto_main)\n({Prefix}exit)"
+    orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]
+    order = ["GeneralOutput(x)", "exit()"]
+    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n({Prefix}exit)"
+    # Vorschläge
+    GeneralOutput("Switched to Stage [subroutinename]")
+    MainNavigation("subroutinename ", orders, order, x)
+
+
+# Kryptographic --------------------------
+
+
+def krypto(): # Zwischenschritt zum Kryptografischem Abteil
+    # Variablen
+    orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]
+    order = ["GeneralOutput(x)", "exit()"]
+    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n({Prefix}exit)"
     # Vorschläge
     GeneralOutput("Switched to Stage [Krypto]")
-    MainNavigation("Krypto ", orders, order, x)
+    MainNavigation("krypto ", orders, order, x)
 
 
 # MainFrameWork ------------------------------
@@ -34,6 +47,12 @@ def MainNavigation(stage, orders, order, x):  # Konsolenfunktion
             exec(order[2])
         elif userinput == orders[3]:
             exec(order[3])
+        elif userinput.startswith(f"{Prefix}goto_"):
+            cmd = userinput.replace(f"{Prefix}goto_", "") + "()"
+            try:
+                exec(cmd)
+            except:
+                GeneralOutput(f"Die Subroutine: [{cmd}] existiert nicht!")
         else:  # Check auf Prefix Fehler
             if userinput != "Error":
                 GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
@@ -64,15 +83,15 @@ def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
 
 # StartMenu ----------------------------------
 
-def StartMenu():  # Erste Funktion des Programms
+def main():  # Erste Funktion des Programms
     # Befehle
-    orders = [f"{Prefix}help", f"{Prefix}goto_krypto", f"{Prefix}exit", "None"]  # Befehle
-    order = ["GeneralOutput(x)", "NavigateToProceed()", "exit()"]
-    x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_krypto)\n({Prefix}exit)"
+    orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]  # Befehle
+    order = ["GeneralOutput(x)", "exit()"]
+    x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_[...])\n({Prefix}exit)"
     # Anmerkung der Stage
     GeneralOutput("Switched to Stage [Main]")
     # Abfrage nach Navigation
-    MainNavigation("Main ", orders, order, x)
+    MainNavigation("main ", orders, order, x)
 
 # MainProgramm -------------------------------
 
@@ -81,4 +100,4 @@ GeneralOutput("Standard Eingabeprefix: " + Prefix)
 # Hilfestellung
 GeneralOutput("Um eine Liste an Befehlen zu erhalten, nutzen Sie: [" + Prefix + "help] .")
 # Start der Menüschleife
-StartMenu()
+main()
