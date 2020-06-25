@@ -5,7 +5,7 @@ Prefix = "/"
 # Subroutine Template ---------------------
 
 
-def subroutinename(): # Zwischenschritt zum Kryptografischem Abteil
+def subroutinename():  # Template Subroutine
     # Variablen
     orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]
     order = ["GeneralOutput(x)", "exit()"]
@@ -18,7 +18,7 @@ def subroutinename(): # Zwischenschritt zum Kryptografischem Abteil
 # Kryptographic --------------------------
 
 
-def krypto(): # Zwischenschritt zum Kryptografischem Abteil
+def krypto():  # Kryptografie Subroutine
     # Variablen
     orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]
     order = ["GeneralOutput(x)", "exit()"]
