@@ -5,7 +5,7 @@ Prefix = "/"
 # Subroutine Template ---------------------
 
 
-def subroutinename():  # Template Subroutine
+def SUBsubroutinename():  # Template Subroutine
     # Variablen
     orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]
     order = ["GeneralOutput(x)", "exit()"]
@@ -18,7 +18,7 @@ def subroutinename():  # Template Subroutine
 # Kryptographic --------------------------
 
 
-def krypto():  # Kryptografie Subroutine
+def SUBkrypto():  # Kryptografie Subroutine
     # Variablen
     orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]
     order = ["GeneralOutput(x)", "exit()"]
@@ -48,7 +48,7 @@ def MainNavigation(stage, orders, order, x):  # Konsolenfunktion
         elif userinput == orders[3]:
             exec(order[3])
         elif userinput.startswith(f"{Prefix}goto_"):
-            cmd = userinput.replace(f"{Prefix}goto_", "") + "()"
+            cmd = "SUB" + userinput.replace(f"{Prefix}goto_", "") + "()"
             try:
                 exec(cmd)
             except:
@@ -83,7 +83,7 @@ def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
 
 # StartMenu ----------------------------------
 
-def main():  # Erste Funktion des Programms
+def SUBmain():  # Erste Funktion des Programms
     # Befehle
     orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]  # Befehle
     order = ["GeneralOutput(x)", "exit()"]
@@ -100,4 +100,4 @@ GeneralOutput("Standard Eingabeprefix: " + Prefix)
 # Hilfestellung
 GeneralOutput("Um eine Liste an Befehlen zu erhalten, nutzen Sie: [" + Prefix + "help] .")
 # Start der Menüschleife
-main()
+SUBmain()
