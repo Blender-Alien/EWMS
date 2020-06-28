@@ -6,5 +6,6 @@ Krypto Stage Befehle:
 - set_symetric
   -> encode
   -> decode
+  -> back
 - goto_krypto
 - help
