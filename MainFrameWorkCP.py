@@ -7,9 +7,9 @@ Prefix = "/"
 
 def SUBsubroutinename():  # Template Subroutine
     # Variablen
-    orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]
-    order = ["GeneralOutput(x)", "exit()"]
-    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n({Prefix}exit)"
+    orders = [f"{Prefix}help", "None", "None", "None"]
+    order = ["GeneralOutput(x)"]
+    x = f"Mögliche Befehle:\n({Prefix}goto_[...])"
     # Vorschläge
     GeneralOutput("Switched to Stage [subroutinename]")
     MainNavigation("subroutinename ", orders, order, x)
@@ -20,13 +20,38 @@ def SUBsubroutinename():  # Template Subroutine
 
 def SUBkrypto():  # Kryptografie Subroutine
     # Variablen
-    orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]
-    order = ["GeneralOutput(x)", "exit()"]
-    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n({Prefix}exit)"
+    orders = [f"{Prefix}help", f"{Prefix}set_symetric", "None", "None"]
+    order = ["GeneralOutput(x)", "krypto_symetric()"]
+    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n({Prefix}set_[(mono / symetric)])"
     # Vorschläge
     GeneralOutput("Switched to Stage [Krypto]")
     MainNavigation("krypto ", orders, order, x)
 
+
+def krypto_symetric():  # Lineare Verschlüsselung
+    # Variablen
+    backtosub = False
+    # General
+    GeneralOutput("Switched to Stage [krypto::linear]")
+    while backtosub == False:
+        userinput = CommandInput("krypto::linear ")
+
+        if userinput == f"{Prefix}back":
+            SUBkrypto()
+        if userinput == f"{Prefix}encode":
+            source = input("Please specify source: ")
+            key = input("Please specify key: ")
+            ret = ""
+            for zeichen in range(len(source)):
+                ret = ret + chr(ord(source[zeichen]) + ord(key[zeichen % len(key)]))
+            GeneralOutput(f"Encoded Source: {ret}")
+        if userinput == f"{Prefix}decode":
+            source = input("Please specify encoded-source: ")
+            key = input("Please specify key: ")
+            ret = ""
+            for zeichen in range(len(source)):
+                ret = ret + chr(ord(source[zeichen]) - ord(key[zeichen % len(key)]))
+            GeneralOutput(f"Decoded Source: {ret}")
 
 # MainFrameWork ------------------------------
 
@@ -85,9 +110,9 @@ def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
 
 def SUBmain():  # Erste Funktion des Programms
     # Befehle
-    orders = [f"{Prefix}help", f"{Prefix}exit", "None", "None"]  # Befehle
-    order = ["GeneralOutput(x)", "exit()"]
-    x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_[...])\n({Prefix}exit)"
+    orders = [f"{Prefix}help", "None", "None", "None"]  # Befehle
+    order = ["GeneralOutput(x)"]
+    x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_[...])"
     # Anmerkung der Stage
     GeneralOutput("Switched to Stage [Main]")
     # Abfrage nach Navigation
