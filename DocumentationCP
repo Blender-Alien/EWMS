@@ -1,0 +1,10 @@
+Main Stage Befehle:
+- goto_krypto
+- help
+
+Krypto Stage Befehle:
+- set_symetric
+  -> encode
+  -> decode
+- goto_krypto
+- help
