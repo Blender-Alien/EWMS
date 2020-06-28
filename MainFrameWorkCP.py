@@ -28,13 +28,13 @@ def SUBkrypto():  # Kryptografie Subroutine
     MainNavigation("krypto ", orders, order, x)
 
 
-def krypto_symetric():  # Lineare Verschlüsselung
+def krypto_symetric():  # Symetrische Verschlüsselung
     # Variablen
     backtosub = False
     # General
-    GeneralOutput("Switched to Stage [krypto::linear]")
+    GeneralOutput("Switched to Stage [krypto::symetric]")
     while backtosub == False:
-        userinput = CommandInput("krypto::linear ")
+        userinput = CommandInput("krypto::symetric ")
 
         if userinput == f"{Prefix}back":
             SUBkrypto()
