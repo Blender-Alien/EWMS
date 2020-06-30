@@ -20,8 +20,8 @@ def SUBsubroutinename():  # Template Subroutine
 
 def SUBkrypto():  # Kryptografie Subroutine
     # Variablen
-    orders = [f"{Prefix}help", f"{Prefix}set_symetric", "None", "None"]
-    order = ["GeneralOutput(x)", "krypto_symetric()"]
+    orders = [f"{Prefix}help", f"{Prefix}set_symetric", f"{Prefix}set_mono", "None"]
+    order = ["GeneralOutput(x)", "krypto_symetric()", "krypto_mono()"]
     x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n({Prefix}set_[(mono / symetric)])"
     # Vorschläge
     GeneralOutput("Switched to Stage [Krypto]")
@@ -38,20 +38,60 @@ def krypto_symetric():  # Symetrische Verschlüsselung
 
         if userinput == f"{Prefix}back":
             SUBkrypto()
-        if userinput == f"{Prefix}encode":
-            source = input("Please specify source: ")
-            key = input("Please specify key: ")
+        elif userinput == f"{Prefix}encode":
+            source = input("[System.Output] Please specify source: ")
+            key = input("[System.Output] Please specify key: ")
             ret = ""
             for zeichen in range(len(source)):
                 ret = ret + chr(ord(source[zeichen]) + ord(key[zeichen % len(key)]))
             GeneralOutput(f"Encoded Source: {ret}")
-        if userinput == f"{Prefix}decode":
-            source = input("Please specify encoded-source: ")
-            key = input("Please specify key: ")
+        elif userinput == f"{Prefix}decode":
+            source = input("[System.Output] Please specify encoded-source: ")
+            key = input("[System.Output] Please specify key: ")
             ret = ""
             for zeichen in range(len(source)):
                 ret = ret + chr(ord(source[zeichen]) - ord(key[zeichen % len(key)]))
             GeneralOutput(f"Decoded Source: {ret}")
+        else:
+            GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
+
+
+def krypto_mono():  # Substitutions Verschlüsselung
+    # Variablen
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    backtosub = False
+    #General
+    GeneralOutput("Switched to Stage [krypto::mono]")
+    while backtosub == False:
+        userinput = CommandInput("krypto::mono ")
+
+        if userinput == f"{Prefix}back":
+            SUBkrypto()
+        elif userinput == f"{Prefix}encode":
+            source = input("[System.Output] Please specify source: ")
+            key = input("[System.Output] Please specify code-alphabet: ")
+            ret = ""
+            for zeichen in source:
+                if zeichen == " ":
+                    ret += " "
+                else:
+                    position = alphabet.find(zeichen)
+                    ret += key[position]
+            GeneralOutput(f"Encoded Source: {ret}")
+        elif userinput == f"{Prefix}decode":
+            source = input("[System.Output] Please specify encoded-source: ")
+            key = input("[System.Output] Please specify code-alphabet: ")
+            ret = ""
+            for zeichen in source:
+                if zeichen == " ":
+                    ret += " "
+                else:
+                    position = key.find(zeichen)
+                    ret += alphabet[position]
+            GeneralOutput(f"Decoded Source: {ret}")
+        else:
+            GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
+
 
 # MainFrameWork ------------------------------
 
