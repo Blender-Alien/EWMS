@@ -14,6 +14,18 @@ def SUBsubroutinename():  # Template Subroutine
     GeneralOutput("Switched to Stage [subroutinename]")
     MainNavigation("subroutinename ", orders, order, x)
 
+# Chatting --------------------------
+
+
+def SUBchat():
+    #Variablen
+    orders = [f"{Prefix}help", f"{Prefix}sethostadress", f"{Prefix}connecttohost", f"{Prefix}hostsession"]
+    order = ["GeneralOutput(x)"]
+    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n{Prefix}sethostadress\n{Prefix}connecttohost\n{Prefix}hostsession"
+    # Vorschläge
+    GeneralOutput("Switched to Stage [chat]")
+    MainNavigation("chat ", orders, order, x)
+
 
 # Kryptographic --------------------------
 
