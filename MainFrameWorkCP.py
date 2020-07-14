@@ -1,4 +1,4 @@
-# CustomVariables ----------------------------
+ # CustomVariables ----------------------------
 
 Prefix = "/"
 
@@ -32,13 +32,81 @@ def SUBchat():
 
 def SUBkrypto():  # Kryptografie Subroutine
     # Variablen
-    orders = [f"{Prefix}help", f"{Prefix}set_symetric", f"{Prefix}set_mono", "None"]
-    order = ["GeneralOutput(x)", "krypto_symetric()", "krypto_mono()"]
-    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n({Prefix}set_[(mono / symetric)])"
+    orders = [f"{Prefix}help", f"{Prefix}set_symetric", f"{Prefix}set_mono", f"{Prefix}set_vige"]
+    order = ["GeneralOutput(x)", "krypto_symetric()", "krypto_mono()", "krypto_vige()"]
+    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n({Prefix}set_[(mono / symetric / vige)])"
     # Vorschläge
     GeneralOutput("Switched to Stage [Krypto]")
     MainNavigation("krypto ", orders, order, x)
 
+
+def krypto_vige():
+  #Variablen
+  backtosub = False
+  alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  alphabets = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            "BCDEFGHIJKLMNOPQRSTUVWXYZA",
+            "CDEFGHIJKLMNOPQRSTUVWXYZAB",
+            "DEFGHIJKLMNOPQRSTUVWXYZABC",
+            "EFGHIJKLMNOPQRSTUVWXYZABCD",
+            "FGHIJKLMNOPQRSTUVWXYZABCDE",
+            "GHIJKLMNOPQRSTUVWXYZABCDEF",
+            "HIJKLMNOPQRSTUVWXYZABCDEFG",
+            "IJKLMNOPQRSTUVWXYZABCDEFGH",
+            "JKLMNOPQRSTUVWXYZABCDEFGHI",
+            "KLMNOPQRSTUVWXYZABCDEFGHIJ",
+            "LMNOPQRSTUVWXYZABCDEFGHIJK",
+            "MNOPQRSTUVWXYZABCDEFGHIJKL",
+            "NOPQRSTUVWXYZABCDEFGHIJKLM",
+            "OPQRSTUVWXYZABCDEFGHIJKLMN",
+            "PQRSTUVWXYZABCDEFGHIJKLMNO",
+            "QRSTUVWXYZABCDEFGHIJKLMNOP",
+            "RSTUVWXYZABCDEFGHIJKLMNOPQ",
+            "STUVWXYZABCDEFGHIJKLMNOPQR",
+            "TUVWXYZABCDEFGHIJKLMNOPQRS",
+            "UVWXYZABCDEFGHIJKLMNOPQRST",
+            "VWXYZABCDEFGHIJKLMNOPQRSTU",
+            "WXYZABCDEFGHIJKLMNOPQRSTUV",
+            "XYZABCDEFGHIJKLMNOPQRSTUVW",
+            "YZABCDEFGHIJKLMNOPQRSTUVWX",
+            "ZABCDEFGHIJKLMNOPQRSTUVWXY"]
+  #General
+  GeneralOutput("Switched to Stage [krypto::vigenere]")
+  while backtosub == False:
+    userinput = CommandInput("krypto::vigenere ")
+
+    if userinput == f"{Prefix}back":
+          SUBkrypto()
+    elif userinput == f"{Prefix}encode":
+      source = input("[System.Output] Please specify source: ")
+      key = input("[System.Output] Please specify key: ")
+      ret = ""
+      stelle = 0
+      for zeichen in source:
+        if zeichen == " ":
+          ret += " "
+        else:
+          k = alphabets[0].find(key[stelle % len(key)])
+          position = (alphabets[k]).find(zeichen)
+          ret += alphabet[position]
+          stelle = stelle + 1
+      GeneralOutput(f"Encoded Source: {ret}")
+    elif userinput == f"{Prefix}decode":
+      source = input("[System.Output] Please specify source: ")
+      key = input("[System.Output] Please specify key: ")
+      ret = ""
+      stelle = 0
+      for zeichen in source:
+        if zeichen == " ":
+          ret += " "
+        else:
+          k = alphabets[0].find(key[stelle % len(key)])
+          position = alphabet.find(zeichen)
+          ret += (alphabets[k])[position]
+          stelle = stelle + 1
+      GeneralOutput(f"Decoded Source: {ret}")
+    else:
+      GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
 
 def krypto_symetric():  # Symetrische Verschlüsselung
     # Variablen
