@@ -76,7 +76,7 @@ def krypto_vige():
     userinput = CommandInput("krypto::vigenere ")
 
     if userinput == f"{Prefix}back":
-          SUBkrypto()
+      SUBkrypto()
     elif userinput == f"{Prefix}encode":
       source = input("[System.Output] Please specify source: ")
       key = input("[System.Output] Please specify key: ")
@@ -86,10 +86,8 @@ def krypto_vige():
         if zeichen == " ":
           ret += " "
         else:
-          k = alphabets[0].find(key[stelle % len(key)])
-          position = (alphabets[k]).find(zeichen)
-          ret += alphabet[position]
-          stelle = stelle + 1
+          ret += alphabet[alphabets[alphabets[0].find(key[stelle % len(key)])].find(zeichen)]
+          stelle += 1
       GeneralOutput(f"Encoded Source: {ret}")
     elif userinput == f"{Prefix}decode":
       source = input("[System.Output] Please specify source: ")
@@ -100,10 +98,8 @@ def krypto_vige():
         if zeichen == " ":
           ret += " "
         else:
-          k = alphabets[0].find(key[stelle % len(key)])
-          position = alphabet.find(zeichen)
-          ret += (alphabets[k])[position]
-          stelle = stelle + 1
+          ret += alphabets[alphabets[0].find(key[stelle % len(key)])][alphabet.find(zeichen)]
+          stelle += 1
       GeneralOutput(f"Decoded Source: {ret}")
     else:
       GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
