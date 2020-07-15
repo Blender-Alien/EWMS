@@ -11,5 +11,9 @@ Krypto Stage Befehle:
   -> encode
   -> decode
   -> back
+- set_vige
+  -> encode
+  -> decode
+  -> back
 - goto_krypto
 - help
