@@ -1,6 +1,6 @@
 # CustomVariables ----------------------------
 
-Prefix = "$"
+Prefix = "/"
 
 # Subroutine Template ---------------------
 
