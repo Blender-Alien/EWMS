@@ -1,4 +1,4 @@
- # CustomVariables ----------------------------
+# CustomVariables ----------------------------
 
 Prefix = "/"
 
@@ -219,7 +219,7 @@ def CommandInput(stage):  # Multipler Aufruf des User Inputs
 
 def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
     # Ausgabe an Nutzer
-    print("[System.Output] " + args)
+    print(f"[System.Output] {args}")
 
 
 # StartMenu ----------------------------------
@@ -237,8 +237,8 @@ def SUBmain():  # Erste Funktion des Programms
 # MainProgramm -------------------------------
 
 # Erstausgabe an Nutzer
-GeneralOutput("Standard Eingabeprefix: " + Prefix)
+GeneralOutput(f"Standard Eingabeprefix: {Prefix}")
 # Hilfestellung
-GeneralOutput("Um eine Liste an Befehlen zu erhalten, nutzen Sie: [" + Prefix + "help] .")
+GeneralOutput(f"Um eine Liste an Befehlen zu erhalten, nutzen Sie: [{Prefix}help] .")
 # Start der Menüschleife
 SUBmain()
