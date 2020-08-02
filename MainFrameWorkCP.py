@@ -181,13 +181,12 @@ def MainNavigation(stage, orders, order, x):  # Konsolenfunktion
         userinput = CommandInput(stage)
         #Kommandos
         if userinput.startswith(f"{Prefix}goto_"):
-            cmd = "SUB" + userinput.replace(f"{Prefix}goto_", "") + "()"
+            subroutine = "SUB" + userinput.replace(f"{Prefix}goto_", "") + "()"
             try:
-                exec(cmd)
+                exec(subroutine)
             except:
-                GeneralOutput(f"Die Subroutine: [{cmd}] existiert nicht!")
-        elif userinput == "Error":  # Check auf Prefix Fehler
-             GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
+                showsubroutine = userinput.replace(f"{Prefix}goto_", "")
+                GeneralOutput(f"Die Subroutine: [{showsubroutine}] existiert nicht!")
         else:
             widerhohlung = 0
             finished = False
@@ -198,6 +197,8 @@ def MainNavigation(stage, orders, order, x):  # Konsolenfunktion
                 except:
                     finished = True
                 widerhohlung += 1
+            if userinput != "Error":  # Check auf Prefix Fehler
+                    GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
     MainNavigation(stage, orders, order,  x)  # Wiederhohlung der Eingabe bei Print-Befehlen
 
 
