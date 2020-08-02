@@ -7,7 +7,7 @@ Prefix = "/"
 
 def SUBsubroutinename():  # Template Subroutine
     # Variablen
-    orders = [f"{Prefix}help", "None", "None", "None"]
+    orders = [f"{Prefix}help"]
     order = ["GeneralOutput(x)"]
     x = f"Mögliche Befehle:\n({Prefix}goto_[...])"
     # Vorschläge
@@ -197,7 +197,7 @@ def MainNavigation(stage, orders, order, x):  # Konsolenfunktion
                 except:
                     finished = True
                 widerhohlung += 1
-            if userinput != "Error":  # Check auf Prefix Fehler
+            if userinput != "Error" and userinput != f"{Prefix}help":  # Check auf Prefix Fehler
                     GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
     MainNavigation(stage, orders, order,  x)  # Wiederhohlung der Eingabe bei Print-Befehlen
 
@@ -226,11 +226,26 @@ def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
 
 # StartMenu ----------------------------------
 
+def main_prefix():
+    global Prefix
+    GeneralOutput(f"Altes Prefix: {Prefix}")
+    usable = False
+    while usable == False:
+        UserPrefix = str(input("[System.Output] Neues Prefix: "))
+        length = len(UserPrefix)
+        if length > 1:
+            GeneralOutput("Prefix ist zu lang!")
+            continue
+        else:
+            Prefix = UserPrefix
+            SUBmain()
+        
+
 def SUBmain():  # Erste Funktion des Programms
     # Befehle
-    orders = [f"{Prefix}help", "None", "None", "None"]  # Befehle
-    order = ["GeneralOutput(x)"]
-    x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_[...])"
+    orders = [f"{Prefix}help", f"{Prefix}setPrefix"]  # Befehle
+    order = ["GeneralOutput(x)", "main_prefix()"]
+    x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_[...])\n({Prefix}setPrefix)"
     # Anmerkung der Stage
     GeneralOutput("Switched to Stage [Main]")
     # Abfrage nach Navigation
@@ -240,6 +255,7 @@ def SUBmain():  # Erste Funktion des Programms
 
 # Erstausgabe an Nutzer
 GeneralOutput(f"Standard Eingabeprefix: {Prefix}")
+GeneralOutput(f"Nutzen Sie [{Prefix}setPrefix] für ein Personalisiertes Prefix.")
 # Hilfestellung
 GeneralOutput(f"Um eine Liste an Befehlen zu erhalten, nutzen Sie: [{Prefix}help] .")
 # Start der Menüschleife
