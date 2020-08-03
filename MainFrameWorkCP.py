@@ -1,6 +1,13 @@
-# CustomVariables ----------------------------
+# Prefix ----------------------------
 
-Prefix = "/"
+try:
+    with open("Prefix.txt", "r") as readfile:
+        readprefix = readfile.read()
+        Prefix = readprefix.replace("Â", "")
+        loadprefix = True
+except:
+    print("[System.Output] Prefix konnte nicht geladen werden!")
+    loadprefix = False
 
 # Subroutine Template ---------------------
 
@@ -238,6 +245,11 @@ def main_prefix():
             continue
         else:
             Prefix = UserPrefix
+            try:
+                with open("Prefix.txt", "w") as savefile:
+                    savefile.write(Prefix)
+            except:
+                pass
             SUBmain()
         
 
@@ -254,7 +266,9 @@ def SUBmain():  # Erste Funktion des Programms
 # MainProgramm -------------------------------
 
 # Erstausgabe an Nutzer
-GeneralOutput(f"Standard Eingabeprefix: {Prefix}")
+if loadprefix == False:
+    Prefix = "/"
+    GeneralOutput(f"Standard Eingabeprefix: {Prefix}")
 GeneralOutput(f"Nutzen Sie [{Prefix}setPrefix] für ein Personalisiertes Prefix.")
 # Hilfestellung
 GeneralOutput(f"Um eine Liste an Befehlen zu erhalten, nutzen Sie: [{Prefix}help] .")
