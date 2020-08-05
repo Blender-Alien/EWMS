@@ -1,5 +1,6 @@
 Main Stage Befehle:
 - goto_krypto
+- setPrefix
 - help
 
 Krypto Stage Befehle:
@@ -15,5 +16,5 @@ Krypto Stage Befehle:
   -> encode
   -> decode
   -> back
-- goto_krypto
+- goto_main
 - help
