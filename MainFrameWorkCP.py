@@ -51,32 +51,6 @@ def krypto_vige():
   #Variablen
   backtosub = False
   alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  alphabets = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-            "BCDEFGHIJKLMNOPQRSTUVWXYZA",
-            "CDEFGHIJKLMNOPQRSTUVWXYZAB",
-            "DEFGHIJKLMNOPQRSTUVWXYZABC",
-            "EFGHIJKLMNOPQRSTUVWXYZABCD",
-            "FGHIJKLMNOPQRSTUVWXYZABCDE",
-            "GHIJKLMNOPQRSTUVWXYZABCDEF",
-            "HIJKLMNOPQRSTUVWXYZABCDEFG",
-            "IJKLMNOPQRSTUVWXYZABCDEFGH",
-            "JKLMNOPQRSTUVWXYZABCDEFGHI",
-            "KLMNOPQRSTUVWXYZABCDEFGHIJ",
-            "LMNOPQRSTUVWXYZABCDEFGHIJK",
-            "MNOPQRSTUVWXYZABCDEFGHIJKL",
-            "NOPQRSTUVWXYZABCDEFGHIJKLM",
-            "OPQRSTUVWXYZABCDEFGHIJKLMN",
-            "PQRSTUVWXYZABCDEFGHIJKLMNO",
-            "QRSTUVWXYZABCDEFGHIJKLMNOP",
-            "RSTUVWXYZABCDEFGHIJKLMNOPQ",
-            "STUVWXYZABCDEFGHIJKLMNOPQR",
-            "TUVWXYZABCDEFGHIJKLMNOPQRS",
-            "UVWXYZABCDEFGHIJKLMNOPQRST",
-            "VWXYZABCDEFGHIJKLMNOPQRSTU",
-            "WXYZABCDEFGHIJKLMNOPQRSTUV",
-            "XYZABCDEFGHIJKLMNOPQRSTUVW",
-            "YZABCDEFGHIJKLMNOPQRSTUVWX",
-            "ZABCDEFGHIJKLMNOPQRSTUVWXY"]
   #General
   GeneralOutput("Switched to Stage [krypto::vigenere]")
   while backtosub == False:
@@ -93,7 +67,7 @@ def krypto_vige():
         if zeichen == " ":
           ret += " "
         else:
-          ret += alphabet[alphabets[alphabets[0].find(key[stelle % len(key)])].find(zeichen)]
+          ret += alphabet[(alphabet.find(zeichen) + (26 - (alphabet.find(key[stelle % len(key)])))) % 26] 
           stelle += 1
       GeneralOutput(f"Encoded Source: {ret}")
     elif userinput == f"{Prefix}decode":
@@ -105,7 +79,7 @@ def krypto_vige():
         if zeichen == " ":
           ret += " "
         else:
-          ret += alphabets[alphabets[0].find(key[stelle % len(key)])][alphabet.find(zeichen)]
+          ret += alphabet[(alphabet.find(zeichen) - (26 - (alphabet.find(key[stelle % len(key)])))) % 26] 
           stelle += 1
       GeneralOutput(f"Decoded Source: {ret}")
     else:
