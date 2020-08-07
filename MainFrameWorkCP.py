@@ -4,7 +4,7 @@ import sys
 
 exit = False # Exit Condition
 Prefix = "None" # Prefix
-subroutines = "main, krypto, chat"
+subroutines = "main, krypto, translator"
 
 # Prefix ----------------------------
 
@@ -24,22 +24,80 @@ def SUBsubroutinename():  # Template Subroutine
     # Variablen
     orders = [f"{Prefix}help"]
     order = ["GeneralOutput(x+y)"]
-    x = f"Mögliche Befehle:\n({Prefix}goto_[...])"
+    x = f"Mögliche Befehle:\n({Prefix}goto_[{subroutines}])"
     # Vorschläge
     GeneralOutput("Switched to Stage [subroutinename]")
     MainNavigation("subroutinename ", orders, order, x)
 
-# Chatting --------------------------
+# Translater -----------------------------
 
 
-def SUBchat():
+def SUBtranslator():
     #Variablen
-    orders = [f"{Prefix}help", f"{Prefix}sethostaddress", f"{Prefix}connecttohost", f"{Prefix}hostsession"]
-    order = ["GeneralOutput(x+y)"]
-    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n{Prefix}sethostaddress\n{Prefix}connecttohost\n{Prefix}hostsession"
+    orders = [f"{Prefix}help", f"{Prefix}set_morse"]
+    order = ["GeneralOutput(x+y)", "translator_morse()"]
+    x = f"Mögliche Befehle:\n({Prefix}goto_[{subroutines}])\n({Prefix}set_morse)"
     # Vorschläge
-    GeneralOutput("Switched to Stage [chat]")
-    MainNavigation("chat ", orders, order, x)
+    GeneralOutput("Switched to Stage [translator]")
+    MainNavigation("translator ", orders, order, x)
+
+
+def translator_morse():
+    #Variablen
+    backtosub = False
+    morsealphabet = { 'A':'.-', 'B':'-...', 
+                    'C':'-.-.', 'D':'-..', 'E':'.', 
+                    'F':'..-.', 'G':'--.', 'H':'....', 
+                    'I':'..', 'J':'.---', 'K':'-.-', 
+                    'L':'.-..', 'M':'--', 'N':'-.', 
+                    'O':'---', 'P':'.--.', 'Q':'--.-', 
+                    'R':'.-.', 'S':'...', 'T':'-', 
+                    'U':'..-', 'V':'...-', 'W':'.--', 
+                    'X':'-..-', 'Y':'-.--', 'Z':'--..', 
+                    '1':'.----', '2':'..---', '3':'...--', 
+                    '4':'....-', '5':'.....', '6':'-....', 
+                    '7':'--...', '8':'---..', '9':'----.', 
+                    '0':'-----', ', ':'--..--', '.':'.-.-.-', 
+                    '?':'..--..', '/':'-..-.', '-':'-....-', 
+                    '(':'-.--.', ')':'-.--.-'}
+    #General
+    GeneralOutput("Switched to Stage [translator::morse]")
+    while backtosub == False:
+        userinput = CommandInput("translator::morse ")
+
+        if userinput == f"{Prefix}help":
+            GeneralOutput(f"Mögliche Befehle:\n({Prefix}encode)\n({Prefix}decode)\n({Prefix}back)")
+        elif userinput == f"{Prefix}encode":
+            source = input("[System.Output] Please specify source: ")
+            ret = ""
+            stelle = 0
+            for zeichen in source:
+                if zeichen != " ":
+                    ret += morsealphabet[zeichen] + "/"
+                else:
+                    ret += "/"
+            GeneralOutput(f"Encoded Source {ret}")
+        elif userinput == f"{Prefix}decode":
+            source = input("[System.Output] Please specify source: ")
+            ret = ""            
+            source += '/'
+            decipher = '' 
+            for zeichen in source:
+                if (zeichen != '/'):
+                    i = 0
+                    ret += zeichen
+                else:
+                    i += 1
+                    if i == 2:
+                        decipher += " "
+                    else:
+                        decipher += list(morsealphabet.keys())[list(morsealphabet.values()).index(ret)]
+                        ret = ""
+            GeneralOutput(f"Decoded Source {decipher}")
+        elif userinput == f"{Prefix}back":
+            SUBtranslator()
+        else:
+            GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
 
 
 # Kryptographic --------------------------
@@ -49,7 +107,7 @@ def SUBkrypto():  # Kryptografie Subroutine
     # Variablen
     orders = [f"{Prefix}help", f"{Prefix}set_symetric", f"{Prefix}set_mono", f"{Prefix}set_vige"]
     order = ["GeneralOutput(x+y)", "krypto_symetric()", "krypto_mono()", "krypto_vige()"]
-    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n({Prefix}set_[(mono / symetric / vige)])"
+    x = f"Mögliche Befehle:\n({Prefix}goto_[{subroutines}])\n({Prefix}set_[(mono / symetric / vige)])"
     # Vorschläge
     GeneralOutput("Switched to Stage [Krypto]")
     MainNavigation("krypto ", orders, order, x)
