@@ -1,3 +1,11 @@
+# Variables / Imports ---------------
+
+import sys
+
+exit = False # Exit Condition
+Prefix = "None" # Prefix
+subroutines = "main, krypto, chat"
+
 # Prefix ----------------------------
 
 try:
@@ -15,7 +23,7 @@ except:
 def SUBsubroutinename():  # Template Subroutine
     # Variablen
     orders = [f"{Prefix}help"]
-    order = ["GeneralOutput(x)"]
+    order = ["GeneralOutput(x+y)"]
     x = f"Mögliche Befehle:\n({Prefix}goto_[...])"
     # Vorschläge
     GeneralOutput("Switched to Stage [subroutinename]")
@@ -26,9 +34,9 @@ def SUBsubroutinename():  # Template Subroutine
 
 def SUBchat():
     #Variablen
-    orders = [f"{Prefix}help", f"{Prefix}sethostadress", f"{Prefix}connecttohost", f"{Prefix}hostsession"]
-    order = ["GeneralOutput(x)"]
-    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n{Prefix}sethostadress\n{Prefix}connecttohost\n{Prefix}hostsession"
+    orders = [f"{Prefix}help", f"{Prefix}sethostaddress", f"{Prefix}connecttohost", f"{Prefix}hostsession"]
+    order = ["GeneralOutput(x+y)"]
+    x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n{Prefix}sethostaddress\n{Prefix}connecttohost\n{Prefix}hostsession"
     # Vorschläge
     GeneralOutput("Switched to Stage [chat]")
     MainNavigation("chat ", orders, order, x)
@@ -40,7 +48,7 @@ def SUBchat():
 def SUBkrypto():  # Kryptografie Subroutine
     # Variablen
     orders = [f"{Prefix}help", f"{Prefix}set_symetric", f"{Prefix}set_mono", f"{Prefix}set_vige"]
-    order = ["GeneralOutput(x)", "krypto_symetric()", "krypto_mono()", "krypto_vige()"]
+    order = ["GeneralOutput(x+y)", "krypto_symetric()", "krypto_mono()", "krypto_vige()"]
     x = f"Mögliche Befehle:\n({Prefix}goto_[...])\n({Prefix}set_[(mono / symetric / vige)])"
     # Vorschläge
     GeneralOutput("Switched to Stage [Krypto]")
@@ -82,6 +90,8 @@ def krypto_vige():
           ret += alphabet[(alphabet.find(zeichen) - (26 - (alphabet.find(key[stelle % len(key)])))) % 26] 
           stelle += 1
       GeneralOutput(f"Decoded Source: {ret}")
+    elif userinput == f"{Prefix}help":
+        GeneralOutput(f"Mögliche Befehle:\n({Prefix}encode)\n({Prefix}decode)\n({Prefix}back)")
     else:
       GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
 
@@ -109,6 +119,8 @@ def krypto_symetric():  # Symetrische Verschlüsselung
             for zeichen in range(len(source)):
                 ret = ret + chr(ord(source[zeichen]) - ord(key[zeichen % len(key)]))
             GeneralOutput(f"Decoded Source: {ret}")
+        elif userinput == f"{Prefix}help":
+            GeneralOutput(f"Mögliche Befehle:\n({Prefix}encode)\n({Prefix}decode)\n({Prefix}back)")
         else:
             GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
 
@@ -146,6 +158,8 @@ def krypto_mono():  # Substitutions Verschlüsselung
                     position = key.find(zeichen)
                     ret += alphabet[position]
             GeneralOutput(f"Decoded Source: {ret}")
+        elif userinput == f"{Prefix}help":
+            GeneralOutput(f"Mögliche Befehle:\n({Prefix}encode)\n({Prefix}decode)\n({Prefix}back)")
         else:
             GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
 
@@ -154,18 +168,25 @@ def krypto_mono():  # Substitutions Verschlüsselung
 
 def MainNavigation(stage, orders, order, x):  # Konsolenfunktion
     # Variablen
+    y = f"\n({Prefix}exit)"
     userinput = "Error"
     recognized = "Error"
+    global exit
     # Eingabeschleife
     while userinput and recognized == "Error":
         userinput = "Error"
         userinput = CommandInput(stage)
         #Kommandos
+        if userinput == f"{Prefix}exit":
+            exit = True
+            sys.exit(0)
         if userinput.startswith(f"{Prefix}goto_"):
             subroutine = "SUB" + userinput.replace(f"{Prefix}goto_", "") + "()"
             try:
                 exec(subroutine)
             except:
+                if exit == True:
+                    sys.exit(0)
                 showsubroutine = userinput.replace(f"{Prefix}goto_", "")
                 GeneralOutput(f"Die Subroutine: [{showsubroutine}] existiert nicht!")
         else:
@@ -178,8 +199,11 @@ def MainNavigation(stage, orders, order, x):  # Konsolenfunktion
                 except:
                     finished = True
                 widerhohlung += 1
+            if exit == True:
+                    sys.exit(0)
             if userinput != "Error" and userinput != f"{Prefix}help":  # Check auf Prefix Fehler
-                    GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
+                GeneralOutput(f"Das Kommando: [{userinput}] existiert nicht!")
+    
     MainNavigation(stage, orders, order,  x)  # Wiederhohlung der Eingabe bei Print-Befehlen
 
 
@@ -230,8 +254,8 @@ def main_prefix():
 def SUBmain():  # Erste Funktion des Programms
     # Befehle
     orders = [f"{Prefix}help", f"{Prefix}setPrefix"]  # Befehle
-    order = ["GeneralOutput(x)", "main_prefix()"]
-    x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_[...])\n({Prefix}setPrefix)"
+    order = ["GeneralOutput(x+y)", "main_prefix()"]
+    x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_[{subroutines}])\n({Prefix}setPrefix)"
     # Anmerkung der Stage
     GeneralOutput("Switched to Stage [Main]")
     # Abfrage nach Navigation
