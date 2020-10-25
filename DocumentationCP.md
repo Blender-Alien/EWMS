@@ -1,9 +1,11 @@
-Main Stage Befehle:
+EWMS Documentation
+#############################
+Main Stage Orders:
 - goto_krypto
 - setPrefix
 - help
-
-Krypto Stage Befehle:
+#############################
+Krypto Stage Orders:
 - set_symetric
   -> encode
   -> decode
@@ -18,3 +20,9 @@ Krypto Stage Befehle:
   -> back
 - goto_main
 - help
+#############################
+Translator Stage Orders:
+- set_morse
+  -> encode
+  -> decode
+  -> back
