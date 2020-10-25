@@ -1,9 +1,11 @@
 EWMS Documentation
+
 #############################
 Main Stage Orders:
 - goto_krypto
 - setPrefix
 - help
+
 #############################
 Krypto Stage Orders:
 - set_symetric
@@ -20,6 +22,7 @@ Krypto Stage Orders:
   -> back
 - goto_main
 - help
+
 #############################
 Translator Stage Orders:
 - set_morse
