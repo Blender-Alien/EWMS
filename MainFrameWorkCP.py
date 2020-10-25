@@ -5,6 +5,7 @@ import sys
 exit = False # Exit Condition
 Prefix = "None" # Prefix
 subroutines = "main, krypto, translator"
+firststart = True
 
 # Prefix ----------------------------
 
@@ -14,7 +15,6 @@ try:
         Prefix = readprefix.replace("Â", "")
         loadprefix = True
 except:
-    print("[System.Output] Prefix konnte nicht geladen werden!")
     loadprefix = False
 
 # Subroutine Template ---------------------
@@ -68,7 +68,7 @@ def translator_morse():
         if userinput == f"{Prefix}help":
             GeneralOutput(f"Mögliche Befehle:\n({Prefix}encode)\n({Prefix}decode)\n({Prefix}back)")
         elif userinput == f"{Prefix}encode":
-            source = input("[System.Output] Please specify source: ")
+            source = input(f"<< Output >> Please specify source: ")
             ret = ""
             stelle = 0
             for zeichen in source:
@@ -78,7 +78,7 @@ def translator_morse():
                     ret += "/"
             GeneralOutput(f"Encoded Source {ret}")
         elif userinput == f"{Prefix}decode":
-            source = input("[System.Output] Please specify source: ")
+            source = input(f"<< Output >> Please specify source: ")
             ret = ""            
             source += '/'
             decipher = '' 
@@ -125,8 +125,8 @@ def krypto_vige():
     if userinput == f"{Prefix}back":
       SUBkrypto()
     elif userinput == f"{Prefix}encode":
-      source = input("[System.Output] Please specify source: ")
-      key = input("[System.Output] Please specify key: ")
+      source = input(f"<< Output >> Please specify source: ")
+      key = input(f"<< Output >> Please specify key: ")
       ret = ""
       stelle = 0
       for zeichen in source:
@@ -137,8 +137,8 @@ def krypto_vige():
           stelle += 1
       GeneralOutput(f"Encoded Source: {ret}")
     elif userinput == f"{Prefix}decode":
-      source = input("[System.Output] Please specify source: ")
-      key = input("[System.Output] Please specify key: ")
+      source = input(f"<< Output >> Please specify source: ")
+      key = input(f"<< Output >> Please specify key: ")
       ret = ""
       stelle = 0
       for zeichen in source:
@@ -164,15 +164,15 @@ def krypto_symetric():  # Symetrische Verschlüsselung
         if userinput == f"{Prefix}back":
             SUBkrypto()
         elif userinput == f"{Prefix}encode":
-            source = input("[System.Output] Please specify source: ")
-            key = input("[System.Output] Please specify key: ")
+            source = input(f"<< Output >> Please specify source: ")
+            key = input(f"<< Output >>Please specify key: ")
             ret = ""
             for zeichen in range(len(source)):
                 ret = ret + chr(ord(source[zeichen]) + ord(key[zeichen % len(key)]))
             GeneralOutput(f"Encoded Source: {ret}")
         elif userinput == f"{Prefix}decode":
-            source = input("[System.Output] Please specify encoded-source: ")
-            key = input("[System.Output] Please specify key: ")
+            source = input(f"<< Output >> Please specify encoded-source: ")
+            key = input(f"<< Output >> Please specify key: ")
             ret = ""
             for zeichen in range(len(source)):
                 ret = ret + chr(ord(source[zeichen]) - ord(key[zeichen % len(key)]))
@@ -195,8 +195,8 @@ def krypto_mono():  # Substitutions Verschlüsselung
         if userinput == f"{Prefix}back":
             SUBkrypto()
         elif userinput == f"{Prefix}encode":
-            source = input("[System.Output] Please specify source: ")
-            key = input("[System.Output] Please specify code-alphabet: ")
+            source = input(f"<< Output >> Please specify source: ")
+            key = input(f"<< Output >> Please specify code-alphabet: ")
             ret = ""
             for zeichen in source:
                 if zeichen == " ":
@@ -206,8 +206,8 @@ def krypto_mono():  # Substitutions Verschlüsselung
                     ret += key[position]
             GeneralOutput(f"Encoded Source: {ret}")
         elif userinput == f"{Prefix}decode":
-            source = input("[System.Output] Please specify encoded-source: ")
-            key = input("[System.Output] Please specify code-alphabet: ")
+            source = input(f"<< Output >> Please specify encoded-source: ")
+            key = input(f"<< Output >> Please specify code-alphabet: ")
             ret = ""
             for zeichen in source:
                 if zeichen == " ":
@@ -269,7 +269,7 @@ def CommandInput(stage):  # Multipler Aufruf des User Inputs
     # Variablen
     returnvalue = None
     # Benutzereingabe
-    userinput = str(input(stage + ">> "))
+    userinput = str(input(f"< {stage}$> "))
     # Checkauf richtiges Prefix
     if userinput.startswith(Prefix):
       pass
@@ -284,7 +284,7 @@ def CommandInput(stage):  # Multipler Aufruf des User Inputs
 
 def GeneralOutput(args):  # Multiple Ausgabe an Nutzer
     # Ausgabe an Nutzer
-    print(f"[System.Output] {args}")
+    print(f"<< Output >> {args}")
 
 
 # StartMenu ----------------------------------
@@ -294,7 +294,7 @@ def main_prefix():
     GeneralOutput(f"Altes Prefix: {Prefix}")
     usable = False
     while usable == False:
-        UserPrefix = str(input("[System.Output] Neues Prefix: "))
+        UserPrefix = str(input(f"<< Output >> Neues Prefix: "))
         length = len(UserPrefix)
         if length > 1:
             GeneralOutput("Prefix ist zu lang!")
@@ -310,12 +310,17 @@ def main_prefix():
         
 
 def SUBmain():  # Erste Funktion des Programms
+    # Variablen
+    global firststart
     # Befehle
     orders = [f"{Prefix}help", f"{Prefix}setPrefix"]  # Befehle
     order = ["GeneralOutput(x+y)", "main_prefix()"]
     x = f"Mögliche Befehle:\n({Prefix}help)\n({Prefix}goto_[{subroutines}])\n({Prefix}setPrefix)"
     # Anmerkung der Stage
-    GeneralOutput("Switched to Stage [Main]")
+    if firststart == True:
+        pass
+    else:
+        GeneralOutput("Switched to Stage [Main]")
     # Abfrage nach Navigation
     MainNavigation("main ", orders, order, x)
 
@@ -328,5 +333,6 @@ if loadprefix == False:
 GeneralOutput(f"Nutzen Sie [{Prefix}setPrefix] für ein Personalisiertes Prefix.")
 # Hilfestellung
 GeneralOutput(f"Um eine Liste an Befehlen zu erhalten, nutzen Sie: [{Prefix}help] .")
+GeneralOutput(f"############################################################")
 # Start der Menüschleife
 SUBmain()
