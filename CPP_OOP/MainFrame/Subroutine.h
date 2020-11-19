@@ -10,6 +10,7 @@ private:
 	std::string Name;
 	std::array<std::string, 4> Befehle;
 	std::string Hilfe;
+	std::string GotoOrder = "[" + ewms::Prefix + "goto_[" + ewms::StringSubroutines + "]]\n";
 
 public:
 
@@ -25,7 +26,7 @@ public:
 
 	std::string HilfeBefehl() {
 		using namespace ewms;
-		std::string HilfeBefehl = { "Moegliche Befehle:\n" + Hilfe + "\n[" + Prefix + "help]" + "\n[" + Prefix + "exit]" };
+		std::string HilfeBefehl = { "Moegliche Befehle:\n" + GotoOrder + Hilfe + "\n[" + Prefix + "help]" + "\n[" + Prefix + "exit]" };
 		
 		return HilfeBefehl;
 	}
@@ -39,6 +40,7 @@ public:
 class SUBmain: public Subroutine {
 public:
 	
+	using Subroutine::Subroutine;
 
 	void BefehlsHandler() {
 
@@ -49,6 +51,7 @@ public:
 class SUBkrypto: public Subroutine {
 public:
 
+	using Subroutine::Subroutine;
 
 	void BefehlsHandler() {
 
