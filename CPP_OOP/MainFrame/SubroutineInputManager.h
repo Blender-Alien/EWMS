@@ -3,17 +3,6 @@
 #include <array>
 
 class SubroutineInputManager {
-private:
-
-	std::array<std::string, 4> MainBefehle = { "Befehl1", "Befehl2", "Befehl3", "Befehl4" };
-	std::string MainHilfe = { "[" + ewms::Prefix + "Befhel1]\n[" + ewms::Prefix + "Befehl2]\n[" + ewms::Prefix + "Befehl3]\n[" + ewms::Prefix + "Befehl4]" };
-	std::string MainName = "Main";
-
-	std::array<std::string, 4> KryptoBefehle = { "Befehl1", "Befehl2", "Befehl3", "Befehl4" };
-	std::string KryptoHilfe = { "[" + ewms::Prefix + "Befhel1]\n[" + ewms::Prefix + "Befehl2]\n[" + ewms::Prefix + "Befehl3]\n[" + ewms::Prefix + "Befehl4]" };
-	std::string KryptoName = "Krypto";
-
-
 public:
 	
 
@@ -62,32 +51,24 @@ public:
 				Output("Falsches Prefix!");
 			}
 			else {
-				Output("Dieses Kommando ist unbekannt!");
+				int succes;
+				if (stage == Subroutines[0]) {
+					succes = Main.BefehlsHandler(Eingabe);
+				}
+				else if (stage == Subroutines[1]) {
+					succes = Krypto.BefehlsHandler(Eingabe);
+				}
+				if (succes == 0) {
+					Output("Dieses Kommando ist unbekannt!");
+				}
 			}
 		}
 		Navigation(stage);
 	}
 	
 
-	void Output(std::string OutputArgument) {
-		std::cout << "<< Output >> " << OutputArgument << std::endl;
-	}
-
-	std::string Input(std::string subroutine) {
-		std::string Input;
-
-		std::cout << "< " + subroutine + " $> ";
-		std::cin >> Input;
-
-		if (!Input.rfind(ewms::Prefix, 0) == 0) {
-			Input = "Prefix_Error";
-		}
-
-		return Input;
-	}
-
 	void StageOutput(std::string stage) {
-		Output("Switched to Stage: " + stage);
+		ewms::Output("Switched to Stage: " + stage);
 	}
 
 };

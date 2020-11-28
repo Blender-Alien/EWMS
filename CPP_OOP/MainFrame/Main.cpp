@@ -10,6 +10,6 @@ int main() {
 	
 	SubroutineInputManager Controller;
 	
-	Controller.Output("Um eine Liste an Befehlen zu erhalten, nutzen Sie: ["+Prefix+"help].");
+	ewms::Output("Um eine Liste an Befehlen zu erhalten, nutzen Sie: ["+Prefix+"help].");
 	Controller.Navigation("main");
 }
