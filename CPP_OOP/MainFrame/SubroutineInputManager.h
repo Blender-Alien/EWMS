@@ -24,11 +24,11 @@ public:
 				std::string subroutinename = { replace(subroutine, "SUB", "") };
 
 				if (subroutine == "SUBmain") {
-					StageOutput("[Main]");
+					StageOutput(stage);
 					Navigation("main");
 				}
 				else if (subroutine == "SUBkrypto") {
-					StageOutput("[Krypto]");
+					StageOutput(stage);
 					Navigation("krypto");
 				}
 				else {
@@ -61,6 +61,9 @@ public:
 				if (succes == 0) {
 					Output("Dieses Kommando ist unbekannt!");
 				}
+				else {
+					StageOutput(stage);
+				}
 			}
 		}
 		Navigation(stage);
@@ -68,7 +71,7 @@ public:
 	
 
 	void StageOutput(std::string stage) {
-		ewms::Output("Switched to Stage: " + stage);
+		ewms::Output("Switched to Stage: [" + stage + "]");
 	}
 
 };

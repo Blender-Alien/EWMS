@@ -68,7 +68,6 @@ public:
 		}
 		if (Eingabe == Befehle[0]) {
 			VigenereCipher();
-			return 0;
 		}
 		return 1;
 	}
@@ -76,7 +75,7 @@ public:
 	void VigenereCipher() {
 		using namespace ewms;
 		std::string Eingabe;
-		Output("Switched to Subroutine: [Vigenere]");
+		Output("Switched to Subroutine: [vigenere]");
 		
 		while (true) {
 			Eingabe = Input("krypto::vigenere");
