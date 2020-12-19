@@ -1,18 +1,22 @@
 #include <string>
 
+#define LOG(args) std::cout << "<< Debug >> " <<  args << std::endl
+
 namespace ewms {
-	std::string Prefix = "/";
+	const bool test = false;
+	
+	const std::string Prefix = "/";
 
-	std::string StringSubroutines = "main, krypto";
-	std::array<std::string, 2> Subroutines = { "main", "krypto" };
+	const std::string StringSubroutines = "main, krypto";
+	const std::array<std::string, 2> Subroutines = { "main", "krypto" };
 
-	std::array<std::string, 4> MainBefehle = { "Befehl1", "Befehl2", "Befehl3", "Befehl4" };
-	std::string MainHilfe = { "[" + Prefix + "Befhel1]\n[" + Prefix + "Befehl2]\n[" + Prefix + "Befehl3]\n[" + Prefix + "Befehl4]" };
-	std::string MainName = "Main";
+	const std::array<std::string, 4> MainBefehle = { "Befehl1", "Befehl2", "Befehl3", "Befehl4" };
+	const std::string MainHilfe = { "[" + Prefix + "Befhel1]\n[" + Prefix + "Befehl2]\n[" + Prefix + "Befehl3]\n[" + Prefix + "Befehl4]" };
+	const std::string MainName = "Main";
 
-	std::array<std::string, 4> KryptoBefehle = { "/set_vige", "Befehl2", "Befehl3", "Befehl4" };
-	std::string KryptoHilfe = { "[" + Prefix + "Befhel1]\n[" + Prefix + "Befehl2]\n[" + Prefix + "Befehl3]\n[" + Prefix + "Befehl4]" };
-	std::string KryptoName = "Krypto";
+	const std::array<std::string, 4> KryptoBefehle = { Prefix + "set_vige", "Befehl2", "Befehl3", "Befehl4" };
+	const std::string KryptoHilfe = { "[" + Prefix + "set_vige]\n[" + Prefix + "Befehl2]\n[" + Prefix + "Befehl3]\n[" + Prefix + "Befehl4]" };
+	const std::string KryptoName = "Krypto";
 
 	void Output(std::string OutputArgument) {
 		std::cout << "<< Output >> " << OutputArgument << std::endl;

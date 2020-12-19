@@ -3,75 +3,126 @@
 #include <array>
 
 class SubroutineInputManager {
+private:
+
+	SUBmain* Main;
+	SUBkrypto* Krypto;
+	std::string Eingabe;
+
 public:
 	
+	SubroutineInputManager(SUBmain& main, SUBkrypto& krypto) {
+		Main = &main;
+		Krypto = &krypto;
 
-	void Navigation(std::string stage) {
+		if (ewms::test == true) {
+			SubroutineTests();
+		}
+	}
+
+	void RunLoop(std::string stage) {
 		using namespace ewms;
-		std::string Eingabe;
-
-		SUBmain Main(MainName, MainBefehle, MainHilfe);
-		SUBkrypto Krypto(KryptoName, KryptoBefehle, KryptoHilfe);
 
 		while (true) {
-			
 			Eingabe = Input(stage);
 
 			if (Eingabe == Prefix + "exit") { exit(0); }
 
 			else if (Eingabe.rfind(Prefix + "goto_", 0) == 0) {
-				std::string subroutine = { "SUB" + replace(Eingabe, Prefix + "goto_", "") };
-				std::string subroutinename = { replace(subroutine, "SUB", "") };
-
-				if (subroutine == "SUBmain") {
-					StageOutput(stage);
-					Navigation("main");
-				}
-				else if (subroutine == "SUBkrypto") {
-					StageOutput(stage);
-					Navigation("krypto");
-				}
-				else {
-					Output("Diese Subroutine ist unbekannt!");
-				}
+				SwitchSubroutine(Eingabe);
 			}
 
 			else if (Eingabe == Prefix + "help") {
-				std::string help;
-				if (stage == Subroutines[0]) {
-					help = Main.HilfeBefehl();
-				}
-				else if (stage == Subroutines[1]) {
-					help = Krypto.HilfeBefehl();
-				}
-				Output(help);
+				HilfeOutput(stage);
 			}
 
 			else if (Eingabe == "Prefix_Error") {
 				Output("Falsches Prefix!");
 			}
 			else {
-				int succes;
-				if (stage == Subroutines[0]) {
-					succes = Main.BefehlsHandler(Eingabe);
-				}
-				else if (stage == Subroutines[1]) {
-					succes = Krypto.BefehlsHandler(Eingabe);
-				}
-				if (succes == 0) {
-					Output("Dieses Kommando ist unbekannt!");
-				}
-				else {
-					StageOutput(stage);
-				}
+				CallSubroutine(Eingabe, stage);
 			}
 		}
-		Navigation(stage);
+		RunLoop(stage);
 	}
 	
+	void SwitchSubroutine(std::string& Eingabe) {
+		std::string subroutine = { "SUB" + ewms::replace(Eingabe, ewms::Prefix + "goto_", "") };
+		std::string subroutinename = { ewms::replace(subroutine, "SUB", "") };
+		std::string new_sub_name;
 
-	void StageOutput(std::string stage) {
+		if (subroutine == "SUBmain") {
+			new_sub_name = "main";
+		}
+		else if (subroutine == "SUBkrypto") {
+			new_sub_name = "krypto";
+		}
+		else {
+			ewms::Output("Diese Subroutine ist unbekannt!");
+			return;
+		}
+		StageOutput(new_sub_name);
+		Navigation(new_sub_name);
+	}
+
+	void HilfeOutput(std::string& stage) {
+		std::string help;
+		if (stage == ewms::Subroutines[0]) {
+			Main->SetToHilfe(help);
+		}
+		else if (stage == ewms::Subroutines[1]) {
+			Krypto->SetToHilfe(help);
+		}
+		ewms::Output(help);
+	}
+
+	void CallSubroutine(std::string& Eingabe, std::string& stage) {
+		int succes;
+		if (stage == ewms::Subroutines[0]) {
+			succes = Main->BefehlsHandler(Eingabe);
+		}
+		else if (stage == ewms::Subroutines[1]) {
+			succes = Krypto->BefehlsHandler(Eingabe);
+		}
+		if (succes == 0) {
+			ewms::Output("Dieses Kommando ist unbekannt!");
+		}
+		else {
+			StageOutput(stage);
+		}
+	}
+
+	void StageOutput(std::string& stage) {
 		ewms::Output("Switched to Stage: [" + stage + "]");
 	}
 
+	void SubroutineTests() {
+		int iTest;
+		std::string sTest;
+
+		iTest = Krypto->Test();
+		if (iTest == 1) {
+			LOG("Instanztest bestanden!");
+		}
+		else {
+			LOG("/// Instanztest nicht bestanden !!!");
+		}
+
+		std::string Original = "HELLOTHERE";
+		std::string Schluessel = "KEYWORD";
+		sTest = Krypto->Calc(Original, Schluessel, 0);
+		if (sTest == "XANPACEUNG") {
+			sTest += Krypto->Calc(sTest, Schluessel, 1);
+			if (sTest == "XANPACEUNGHELLOTHERE")
+			{
+				LOG("Kryptotest bestanden!");
+			}
+			else {
+				LOG("/// Kryptotest nicht bestanden !!!");
+			}
+		}
+		else {
+			LOG("/// Kryptotest nicht bestanden !!!");
+		}
+	}
 };

@@ -10,19 +10,19 @@ protected:
 	std::string Name;
 	std::array<std::string, 4> Befehle;
 	std::string Hilfe;
-	std::string GotoOrder = "[" + ewms::Prefix + "goto_[" + ewms::StringSubroutines + "]]\n";
+	const std::string GotoOrder = "[" + ewms::Prefix + "goto_[" + ewms::StringSubroutines + "]]\n";
 
 public:
 
 	Subroutine() = default;
 
-	Subroutine(std::string Cname, std::array<std::string, 4> Cbefehle, std::string Chilfe) {
+	Subroutine(const std::string& Cname, const std::array<std::string, 4>& Cbefehle, const std::string& Chilfe) {
 		Name = Cname;
 		Hilfe = Chilfe;
 		Befehle = Cbefehle;
 	}
 
-	int BefehlsHandler(std::string Eingabe) {
+	int BefehlsHandler(std::string& Eingabe) const {
 		for (int OrderCounter = 0; OrderCounter < 4; OrderCounter++) {
 			if (Eingabe == Befehle[OrderCounter]) {
 				return 1;
@@ -31,15 +31,17 @@ public:
 		return 0;
 	}
 
-	std::string HilfeBefehl() {
+	void SetToHilfe(std::string& HilfeAssign) {
 		using namespace ewms;
-		std::string HilfeBefehl = { "Moegliche Befehle:\n" + GotoOrder + Hilfe + "\n[" + Prefix + "help]" + "\n[" + Prefix + "exit]" };
-		return HilfeBefehl;
+		const std::string HilfeBefehl = { "Moegliche Befehle:\n" + GotoOrder + Hilfe + "\n[" + Prefix + "help]" + "\n[" + Prefix + "exit]" };
+		HilfeAssign = HilfeBefehl;
 	}
 
 	void ExitBefehl() {
 		exit(0);
 	}
+
+	virtual int Test() = 0;
 
 };
 
@@ -48,11 +50,15 @@ public:
 	
 	using Subroutine::Subroutine;
 
-	int BefehlsHandler(std::string Eingabe) {
+	int BefehlsHandler(std::string& Eingabe) {
 		if (Subroutine::BefehlsHandler(Eingabe) == 0) {
 			return 0;
 		}
 		return 1;
+	}
+
+	int Test() {
+		return 0;
 	}
 
 };
@@ -62,7 +68,7 @@ public:
 
 	using Subroutine::Subroutine;
 
-	int BefehlsHandler(std::string Eingabe) {
+	int BefehlsHandler(std::string& Eingabe) {
 		if (Subroutine::BefehlsHandler(Eingabe) == 0) {
 			return 0;
 		}
@@ -108,35 +114,31 @@ public:
 		}
 	}
 
-	std::string Calc(std::string Original, std::string Schluessel, int Method) {
+	std::string Calc(std::string& Original, std::string& Schluessel, int Method) {
 		std::string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		std::string Ergebnis;
 		int Stelle = 0;
 		
 		for (const char& zeichen : Original) {
 			using namespace std;
-
-			cout << "$" << zeichen << ", ";
 			
 			size_t Buchstabenwert1 = Alphabet.find(zeichen);
 			size_t Buchstabenwert2 = Alphabet.find(Schluessel[Stelle % Schluessel.length()]);
-			
-
-			cout << "$" << Buchstabenwert1 << ", ";
-			cout << "$" << Buchstabenwert2 << ", ";
 		
 			if (Method == 0) {
 				Ergebnis += Alphabet[(Buchstabenwert1 + (26 - Buchstabenwert2)) % 26];
-				cout << "\n";
 			}
 			else {
 				int Rohwert = Buchstabenwert1 - (26 - Buchstabenwert2);
-				cout << Rohwert << "\n";
 				Ergebnis += Alphabet[(26 + (Rohwert % 26)) % 26];
 			}
 			Stelle++;
 		}
 		return Ergebnis;
+	}
+
+	int Test(){
+		return 1;
 	}
 
 };
