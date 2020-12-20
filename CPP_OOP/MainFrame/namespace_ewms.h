@@ -3,7 +3,7 @@
 #define LOG(args) std::cout << "<< Debug >> " <<  args << std::endl
 
 namespace ewms {
-	const bool test = false;
+	const bool test = true;
 	
 	const std::string Prefix = "/";
 

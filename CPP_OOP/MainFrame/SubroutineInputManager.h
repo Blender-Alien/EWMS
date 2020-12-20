@@ -18,6 +18,8 @@ public:
 		if (ewms::test == true) {
 			SubroutineTests();
 		}
+
+		RunLoop("main");
 	}
 
 	void RunLoop(std::string stage) {
@@ -62,7 +64,7 @@ public:
 			return;
 		}
 		StageOutput(new_sub_name);
-		Navigation(new_sub_name);
+		RunLoop(new_sub_name);
 	}
 
 	void HilfeOutput(std::string& stage) {

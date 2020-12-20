@@ -10,11 +10,6 @@ int main() {
 
 	SUBmain Main(MainName, MainBefehle, MainHilfe);
 	SUBkrypto Krypto(KryptoName, KryptoBefehle, KryptoHilfe);
-
+	ewms::Output("Um eine Liste an Befehlen zu erhalten, nutzen Sie: [" + Prefix + "help].");
 	SubroutineInputManager Controller(Main, Krypto);
-	
-	ewms::Output("Um eine Liste an Befehlen zu erhalten, nutzen Sie: ["+Prefix+"help].");
-	
-	Controller.RunLoop("main");
-	
 }
