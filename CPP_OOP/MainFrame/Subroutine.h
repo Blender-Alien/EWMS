@@ -85,7 +85,7 @@ public:
 		
 		while (true) {
 			Eingabe = Input("krypto::vigenere");
-			
+			std::cout << "\x1B[2J\x1B[H";
 			if (Eingabe == Prefix + "encode" || Eingabe == Prefix + "decode") {
 				std::string Original;
 				std::string Schluessel;

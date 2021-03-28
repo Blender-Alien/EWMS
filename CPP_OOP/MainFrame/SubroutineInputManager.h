@@ -27,7 +27,7 @@ public:
 
 		while (true) {
 			Eingabe = Input(stage);
-
+			std::cout << "\x1B[2J\x1B[H";
 			if (Eingabe == Prefix + "exit") { exit(0); }
 
 			else if (Eingabe.rfind(Prefix + "goto_", 0) == 0) {
@@ -45,6 +45,7 @@ public:
 				CallSubroutine(Eingabe, stage);
 			}
 		}
+		
 		RunLoop(stage);
 	}
 	
