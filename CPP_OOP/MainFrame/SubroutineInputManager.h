@@ -27,7 +27,7 @@ public:
 
 		while (true) {
 			Eingabe = Input(stage);
-			std::cout << "\x1B[2J\x1B[H";
+			ClearConsole();
 			if (Eingabe == Prefix + "exit") { exit(0); }
 
 			else if (Eingabe.rfind(Prefix + "goto_", 0) == 0) {
@@ -41,6 +41,7 @@ public:
 			else if (Eingabe == "Prefix_Error") {
 				Output("Falsches Prefix!");
 			}
+			
 			else {
 				CallSubroutine(Eingabe, stage);
 			}

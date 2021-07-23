@@ -22,6 +22,11 @@ namespace ewms {
 		std::cout << "<< Output >> " << OutputArgument << std::endl;
 	}
 
+	void ClearConsole()
+	{
+		system("CLS");
+	}
+
 	std::string Input(std::string subroutine) {
 		std::string Input;
 
