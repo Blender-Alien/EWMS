@@ -1,5 +1,6 @@
 from Files.Utility import InterfaceManager
 from Files.Database import Namespace
+import os
 
 class SubroutineManager:
 
@@ -22,7 +23,7 @@ class SubroutineManager:
                 elif rvalue == stage:
                     self.IM.Output(f"Stage: [{stage}] is already set!")
                 else:
-                    self.IM.Output(f"Switching to stage: [{rvalue}].")
+                    self.IM.Output(f"Switching to subroutine: [{rvalue}].")
                     stage = rvalue
 
             elif Eingabe == self.Prefix + "help":
