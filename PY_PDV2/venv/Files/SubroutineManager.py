@@ -1,6 +1,5 @@
 from Files.Utility import InterfaceManager
 from Files.Database import Namespace
-import os
 
 class SubroutineManager:
 
@@ -12,7 +11,7 @@ class SubroutineManager:
 
         self.RunLoop("main")
 
-    def RunLoop(self, stage):
+    def RunLoop(self, stage): # Primäre Programmschleife für Nutzerinteraktion
         while True:
             Eingabe = self.IM.Input(stage, self.Prefix)
 

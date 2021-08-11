@@ -28,14 +28,14 @@ class Main(SubroutineClass):
     def __init__(self, subroutines, prefix):
         super().__init__(subroutines, prefix)
         self.help += f"<[{prefix}test_order]>"
-        self.commands = ["info"]
+        self.commands = ["info", "test_order"]
 
     def test_order(self):
         IM.Output("This is a test order!")
 
     def info(self):
         print("< This subroutine represents the main-menu of 'EWMS'. >"
-              "\n< All primary functionality is accessably though this subroutine. >")
+             "\n< All primary functionality is accessably through this subroutine. >")
 
 class Krypto(SubroutineClass):
     def __init__(self, subroutines, prefix):
@@ -49,8 +49,8 @@ class Krypto(SubroutineClass):
             Eingabe = IM.Input("krypto::symmetrical-cipher", self.Prefix)
             if Eingabe == self.Prefix + "encode" or Eingabe == self.Prefix + "decode":
 
-                Original = input("<$> Originaltext: ")
-                Schluessel = input("<$> Schluessel: ")
+                Original = input("<$> Originaltext: ").upper()
+                Schluessel = input("<$> Schluessel: ").upper()
                 Cipher = input("<$> Cipher [vige / None / None]: ")
 
                 if Cipher == "vige":
@@ -82,4 +82,4 @@ class Krypto(SubroutineClass):
 
     def info(self):
         print("< This subroutine represents the cryptographic algorithms of 'EWMS'. >"
-              "\n< It contains a number of different methods, most promintly featured, the 'Vigénère-Cipher'. >")
+              "\n< It contains a number of different methods, most prominently featured, the 'Vigénère-Cipher'. >")
